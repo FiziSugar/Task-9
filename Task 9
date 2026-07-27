@@ -56,6 +56,63 @@ plt.show()
 
 
 
+-----------------------------------------------------------------Graph 2----------------------------------------------------------------
+
+
+
+
+import numpy as np
+import matplotlib.pyplot as mpl 
+import matplotlib.pyplot as plt
+plt.title("Compton scattering of X-ray photon off an electron")
+ELECTRON_REST_ENERGY = 511 
+photon_energies = [50, 100, 200, 500, 1000]
+
+# Create an array of scattering angles from 0 to 180 degrees
+# thirs parameter is the number of points in the array 
+angles = np.linspace(0, 180, 10000)
+angles_rad = np.radians(angles)
+
+for E in photon_energies:
+    # Step A: Compute E prime
+    E_prime = E / (1 + (E / 511.0) * (1 - np.cos(angles_rad)))
+
+    # Step B: Compute v/c
+    v_over_c = np.sqrt(1 - (511.0 / (E - E_prime + 511.0)) ** 2)
+
+    # Step C: Plot the velocity ratio
+    plt.plot(angles, v_over_c, label=f"E = {E} keV")
+   
+
+# Adding axes titles
+plt.ylabel("$ Electron\ recoil\ speed\  v/c$") # $ acts to create a math environment in LaTeX, allowing for the use of Greek letters and other mathematical symbols.
+plt.xlabel(r"$ Photon\ scattering\  angle\  \theta/deg$") # r acts to create raw string so that the backslash is treated as a literal character and not as an escape character.
+
+# Set the x and y limits of the plot (Here the purpose is to set the x limit to 0 and y limit to 4)
+plt.xlim((0))
+plt.ylim((0,1))
+
+# Set the x-ticks to be at 0, 50, 100, and 150 degrees to manually override the default tick locations and labels.
+plt.xticks([45, 90, 135, 180])
+
+
+plt.tick_params(axis="y", which="both", right=True, direction ="in", grid_alpha=0.2) #main purpose of this is to customize the appearance of the ticks on the y-axis. It specifies that ticks should be drawn on both sides of the axis, with a right-side tick, inward direction, and a grid line transparency of 0.2.
+plt.tick_params(axis="x", which="both", right=True, direction ="in", grid_alpha=0.2, top=True)
+
+
+
+
+plt.grid(True)
+plt.legend()
+plt.text(90, 0.6, r"$v = c \sqrt{1 - \left( \frac{m_e c^2}{hc/\lambda - hc/\lambda' + m_e c^2} \right)^2}$", fontsize=12, bbox=dict(facecolor='white', edgecolor='black'))
+bbox=dict(boxstyle="square", ec=(0.0, 0.0, 0.0), fc=(1., 1, 1))
+
+
+
+plt.show()
+
+
+
 
 
   
