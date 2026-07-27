@@ -112,7 +112,54 @@ bbox=dict(boxstyle="square", ec=(0.0, 0.0, 0.0), fc=(1., 1, 1))
 plt.show()
 
 
+---------------------------------------------------------------------Graph 3 --------------------------------------------------------
 
+import numpy as np
+import matplotlib.pyplot as mpl 
+import matplotlib.pyplot as plt
+import scipy.constants as const
+
+plt.title("Compton scattering of X-ray photon off an electron")
+ELECTRON_REST_ENERGY = (const.m_e * const.c**2) / const.eV / 1000.0
+photon_energies = [50, 100, 200, 500, 1000]
+
+# Create an array of scattering angles from 0 to 180 degrees
+# thirs parameter is the number of points in the array 
+angles = np.linspace(0, 180, 10000)
+angles_rad = np.radians(angles)
+
+for E in photon_energies:
+    denominator = 1 + (E / ELECTRON_REST_ENERGY) * (1 - np.cos(angles_rad)) - np.cos(angles_rad)
+    phi_deg = np.degrees(np.arctan(np.sin(angles_rad) / denominator))
+    plt.plot(angles, phi_deg, label=f"E = {E} keV")
+
+# Adding axes titles
+plt.ylabel(r"Electron recoil angle $\phi$ /deg") # $ acts to create a math environment in LaTeX, allowing for the use of Greek letters and other mathematical symbols.
+plt.xlabel("Photon scattering angle $\\theta$ /deg") # r acts to create raw string so that the backslash is treated as a literal character and not as an escape character.
+
+# Set the x and y limits of the plot (Here the purpose is to set the x limit to 0 and y limit to 4)
+plt.xlim((0))
+plt.ylim((0,90))
+
+# Set the x-ticks to be at 0, 50, 100, and 150 degrees to manually override the default tick locations and labels.
+plt.xticks([45, 90, 135, 180])
+
+
+plt.tick_params(axis="y", which="both", right=True, direction ="in", grid_alpha=0.2) #main purpose of this is to customize the appearance of the ticks on the y-axis. It specifies that ticks should be drawn on both sides of the axis, with a right-side tick, inward direction, and a grid line transparency of 0.2.
+plt.tick_params(axis="x", which="both", right=True, direction ="in", grid_alpha=0.2, top=True)
+
+
+
+
+plt.grid(True)
+plt.legend()
+plt.text(90, 65, r"$\tan\phi = \frac{\sin\theta}{1 + \frac{h}{m_e c\lambda}(1 - \cos\theta) - \cos\theta}$", fontsize=12, bbox=dict(boxstyle="square", ec=(0.0, 0.0, 0.0), fc=(1.0, 1.0, 1.0)))
+
+
+
+
+
+plt.show()
 
 
   
