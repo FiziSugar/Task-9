@@ -1,1 +1,61 @@
+import numpy as np
+import matplotlib.pyplot as mpl 
+import matplotlib.pyplot as plt
+plt.title("Compton scattering of X-ray photon off an electron")
+ELECTRON_REST_ENERGY = 511 
+photon_energies = [50, 100, 200, 500, 1000]
 
+# Create an array of scattering angles from 0 to 180 degrees
+# thirs parameter is the number of points in the array 
+angles = np.linspace(0, 180, 10000)
+angles_rad = np.radians(angles)
+
+for E in photon_energies:
+     #Calculate the scattered photon energy using the Compton formula
+    fractional_shift = (E / ELECTRON_REST_ENERGY) * (1 - np.cos(angles_rad))
+
+    
+    # Plot the scattered photon energy as a function of scattering angle and gridlines. Label acts to identify the photon energy in the legend.
+    plt.grid(True)
+    plt.plot(angles, fractional_shift, label=f'Photon Energy = {E} keV',)
+    plt.legend()
+
+# Adding axes titles
+plt.ylabel("$\Delta\lambda/\lambda$") # $ acts to create a math environment in LaTeX, allowing for the use of Greek letters and other mathematical symbols.
+plt.xlabel(r"$ Photon\ scattering\  angle\  \theta/deg$") # r acts to create raw string so that the backslash is treated as a literal character and not as an escape character.
+
+# Set the x and y limits of the plot (Here the purpose is to set the x limit to 0 and y limit to 4)
+plt.xlim((0))
+plt.ylim((0,4))
+
+# Set the x-ticks to be at 0, 50, 100, and 150 degrees to manually override the default tick locations and labels.
+plt.xticks([45, 90, 135, 180])
+
+
+plt.tick_params(axis="y", which="both", right=True, direction ="in", grid_alpha=0.2) #main purpose of this is to customize the appearance of the ticks on the y-axis. It specifies that ticks should be drawn on both sides of the axis, with a right-side tick, inward direction, and a grid line transparency of 0.2.
+plt.tick_params(axis="x", which="both", right=True, direction ="in", grid_alpha=0.2)
+
+
+
+
+
+plt.text(12.5,2.5, r"$\frac{\Delta\lambda}{\lambda} = \frac{E}{m_e c^2}(1 - \cos\theta)$", fontsize=12,
+         bbox=dict(boxstyle="square", ec=(0.0, 0.0, 0.0), fc=(1., 1, 1)))
+
+
+
+
+
+
+
+
+
+
+plt.show()
+
+
+
+
+
+
+  
